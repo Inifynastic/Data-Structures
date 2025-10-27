@@ -1,5 +1,5 @@
 #include <iostream>
-
+// Implemented Rule of 5 and Raw Pointers
 template <typename T>
 struct Node{
 	
@@ -18,14 +18,14 @@ class LinkedList{
 			Size = 0;
 		}
 		
-		void InsertAtTheHead(T Dat){
+		void InsertAtTheHead(const T& Dat){
 			Node<T>* TempPointer = HeadPointer;
 			HeadPointer = new Node<T>;
 			HeadPointer->Data = Dat;
 			HeadPointer->NextNode = TempPointer;
 		}
 		
-		void InsertAtTheTail(T Dat){
+		void InsertAtTheTail(const T& Dat){
 			if(HeadPointer == nullptr){
 				HeadPointer = new Node<T>;
 				HeadPointer->Data = Dat;
@@ -42,7 +42,39 @@ class LinkedList{
 			TempPointer->NextNode = nullptr;
 		}
 		
-		void InsertAtAIndex(size_t Index, T Dat){
+		void InsertAtAIndex(const size_t& Index, const T& Dat){
+			if(HeadPointer == nullptr){
+				HeadPointer = new Node<T>;
+				HeadPointer->Data = Dat;
+				HeadPointer->NextNode = nullptr;
+				return;
+			}
+			if(Index == 0){
+				InsertAtTheHead(Dat);
+				return;
+			}
+			Node<T>* TempPointer = HeadPointer;
+			Node<T>* CurPointer{nullptr};
+			Node<T>* PrevPointer{nullptr};
+			int i{0};
+			do{
+				if(TempPointer == nullptr){
+					std::cout<<"Out of Bound!"<<std::endl;
+					return;
+				}
+				PrevPointer = TempPointer;
+				TempPointer = TempPointer->NextNode;
+				i++;
+			}while(i != Index - 1);
+					
+			CurPointer = new Node<T>;
+			CurPointer->Data = Dat;
+			CurPointer->NextNode = TempPointer;
+			
+			PrevPointer->NextNode = CurPointer;
+		}
+		
+		void DeleteAtAIndex(const size_t& Index){
 			
 		}
 		
@@ -58,23 +90,29 @@ class LinkedList{
 			}
 			std::cout<<std::endl;
 		}
+		
+		// Rule of 5
 };
 
 int main(){
 	LinkedList<int> p1;
 	
-	p1.AddNodeAtAss(1);
-	p1.AddNodeAtAss(2);
-	p1.AddNodeAtAss(3);
-	p1.AddNodeAtAss(4);
-	p1.AddNodeAtAss(5);
-	p1.AddNodeAtAss(6);
+	p1.InsertAtTheTail(1);
+	p1.InsertAtTheTail(2);
+	p1.InsertAtTheTail(3);
+	p1.InsertAtTheTail(4);
+	p1.InsertAtTheTail(5);
+	p1.InsertAtTheTail(6);
 
 	
 	p1.DisplatList();
 	
-	p1.InsertAtTheFront(7);
+	p1.InsertAtTheHead(7);
 	
+	p1.DisplatList();
+	
+	
+	p1.InsertAtAIndex(0, 60);
 	p1.DisplatList();
 
 }

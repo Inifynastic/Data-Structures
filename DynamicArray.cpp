@@ -1,4 +1,6 @@
-#include <iostream>
+// Implemented Rule of 3 and Raw Pointers
+
+#include <iostream> 
 
 template <typename Tipe>
 class DynamicArray{
@@ -41,11 +43,11 @@ class DynamicArray{
 			// Fk this for now
 		}
 		
-		  ~DynamicArray() {
+		  ~DynamicArray() { //Custom Destructor [Rule of 3 Part One]
 			delete[] Data;
 		}
 		
-		DynamicArray(const DynamicArray& OldArray){
+		DynamicArray(const DynamicArray& OldArray){ //Copy Constructor [Rule of 3 Part 2]
 			Size = OldArray.Size;
 			MaxSize = OldArray.MaxSize;
 			Data = new Tipe[MaxSize];
@@ -54,7 +56,7 @@ class DynamicArray{
 				Data[i] = OldArray.Data[i];
 			}
 		}
-		DynamicArray& operator =(const DynamicArray& OldArray){ //Copy Assignment Operator.
+		DynamicArray& operator =(const DynamicArray& OldArray){ //Copy Assignment Operator. [Rule of 3 Part 3]
 			if(this == &OldArray){
 				return *this;
 			}
