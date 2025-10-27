@@ -75,6 +75,26 @@ class LinkedList{
 		}
 		
 		void DeleteAtAIndex(const size_t& Index){
+			if(HeadPointer == nullptr){
+				std::cout<<"The LinkedList is empty."<<std::endl;
+				return;
+			}
+			if(Index == 0){
+				std::cout<<"I will do this in future when I build a DeleteAtFront"<<std::endl;
+				return;
+			}
+			Node<T>* TempPointer = HeadPointer;
+			Node<T>* PrevPointer{nullptr};
+			for(size_t i{0}; i< Index - 1 ;i++){
+				if(TempPointer == nullptr){
+					std::cout<<"Out of Bound!"<<std::endl;
+					return;
+				}
+				PrevPointer = TempPointer;
+				TempPointer = TempPointer->NextNode;
+			}
+			PrevPointer->NextNode = TempPointer->NextNode;
+			delete TempPointer;
 			
 		}
 		
@@ -91,7 +111,18 @@ class LinkedList{
 			std::cout<<std::endl;
 		}
 		
-		// Rule of 5
+		~LinkedList(){ //Destructor
+			Node<T>* TempPointer{nullptr};
+			while(HeadPointer != nullptr){
+				TempPointer = HeadPointer;
+				HeadPointer = HeadPointer->NextNode;
+				delete TempPointer;
+			}
+		}
+		
+		LinkedList(const LinkedList& OldList){ //Copy Constructor
+			while(OldList)
+		}
 };
 
 int main(){
@@ -113,6 +144,9 @@ int main(){
 	
 	
 	p1.InsertAtAIndex(0, 60);
+	p1.DisplatList();
+	
+	p1.DeleteAtAIndex(2);
 	p1.DisplatList();
 
 }
