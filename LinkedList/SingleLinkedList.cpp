@@ -121,7 +121,38 @@ class LinkedList{
 		}
 		
 		LinkedList(const LinkedList& OldList){ //Copy Constructor
-			while(OldList)
+			Node<T>* TempPointer{OldList.HeadPointer};
+			while(TempPointer != nullptr){
+				
+				InsertAtTheTail(TempPointer->Data);
+				
+				TempPointer = TempPointer->NextNode;
+			}
+		}
+		
+		LinkedList& operator=(const LinkedList& OldList){ //Copy Assignemnt Opeator
+			this->~LinkedList();
+			Node<T>* TempPointer{OldList.HeadPointer};
+			while(TempPointer != nullptr){
+				
+				InsertAtTheTail(TempPointer->Data);
+				
+				TempPointer = TempPointer->NextNode;
+			}
+			OldList.~LinkedList();
+			return *this;
+		}
+		
+		LinkedList( LinkedList&& OldList) noexcept{ //Move Operator
+			HeadPointer = OldList.HeadPointer;
+			OldList.HeadPointer = nullptr;
+		}
+		
+		LinkedList& operator=( LinkedList&& OldList) noexcept{ //Move Assignemnt Opeator
+			this->~LinkedList();
+			HeadPointer = OldList.HeadPointer;
+			OldList.HeadPointer = nullptr;
+			return *this;
 		}
 };
 
@@ -148,5 +179,20 @@ int main(){
 	
 	p1.DeleteAtAIndex(2);
 	p1.DisplatList();
+	
+	std::cout<<std::endl;
+	LinkedList<int> p2(p1);
+	p2.DisplatList();
+	
+	std::cout<<std::endl;
+	LinkedList<int> p3;
+	
+	p3.InsertAtTheTail(5);
+	p3.InsertAtTheTail(6);
+	
+	p3.DisplatList();
+	
+	p3 = p1;
+	p3.DisplatList();
 
 }
