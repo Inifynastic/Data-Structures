@@ -131,15 +131,23 @@ class LinkedList{
 		}
 		
 		LinkedList& operator=(const LinkedList& OldList){ //Copy Assignemnt Opeator
-			this->~LinkedList();
-			Node<T>* TempPointer{OldList.HeadPointer};
+			Node<T>* TempPointer{nullptr};
+			if(this == &OldList){
+				return *this;
+			}
+			while(HeadPointer != nullptr){
+				TempPointer = HeadPointer;
+				HeadPointer = HeadPointer->NextNode;
+				delete TempPointer;
+			}
+			
+			TempPointer = OldList.HeadPointer;
 			while(TempPointer != nullptr){
 				
 				InsertAtTheTail(TempPointer->Data);
 				
 				TempPointer = TempPointer->NextNode;
 			}
-			OldList.~LinkedList();
 			return *this;
 		}
 		
@@ -149,9 +157,10 @@ class LinkedList{
 		}
 		
 		LinkedList& operator=( LinkedList&& OldList) noexcept{ //Move Assignemnt Opeator
-			this->~LinkedList();
+			Node<T>* TempPointer{nullptr};
+			TempPointer = HeadPointer;
 			HeadPointer = OldList.HeadPointer;
-			OldList.HeadPointer = nullptr;
+			OldList.HeadPointer = TempPointer;
 			return *this;
 		}
 };
@@ -192,7 +201,7 @@ int main(){
 	
 	p3.DisplatList();
 	
-	p3 = p1;
+	p3 = p3;
 	p3.DisplatList();
 
 }
