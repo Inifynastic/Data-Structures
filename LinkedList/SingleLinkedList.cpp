@@ -14,10 +14,6 @@ class LinkedList{
 	size_t Size{0};
 	
 	public:
-		explicit LinkedList(){
-			Size = 0;
-		}
-		
 		void InsertAtTheHead(const T& Dat){
 			Node<T>* TempPointer = HeadPointer;
 			HeadPointer = new Node<T>;
