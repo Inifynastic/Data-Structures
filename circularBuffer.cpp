@@ -11,7 +11,7 @@ class circularBuffer{
 	T* buffer{0};
 	
 	public:
-		circularBuffer(const size_t& Size){
+		explicit circularBuffer(const size_t& Size){
 			buffer = new T[Size];
 			capacity = Size;
 		}
