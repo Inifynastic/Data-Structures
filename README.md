@@ -4,10 +4,10 @@ Current Progression:-
 
 Easy:
 
-✅ Dynamic Array (Completed)
-- Stack
+- ✅Dynamic Array (Completed)
+- ✅Stack (Completed)
 - Queue
-- Circular Buffer
+- ✅Circular Buffer (Completed)
 
 
 Intermediate:
