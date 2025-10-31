@@ -6,14 +6,14 @@ Easy:
 
 - ✅Dynamic Array (Completed)
 - ✅Stack (Completed)
-- Queue
+- ✅Queue(Completed but needs a better algorythm)
 - ✅Circular Buffer (Completed)
 
 
 Intermediate:
 
 - Linked List[Half Done]
-  - ✅ Singly Linked List[Completed]
+  - ✅ Singly Linked List(Completed)
   - Doubly LinkedList[TBA]
 - Deque
 - Heap
