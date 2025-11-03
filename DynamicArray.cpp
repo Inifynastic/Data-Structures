@@ -8,7 +8,17 @@ class DynamicArray{
 		Tipe* Data{nullptr};
 		size_t Size{0};
 		size_t MaxSize{5};
-	
+		
+		void ResizeArray(){
+			Tipe* NewData = new Tipe[ MaxSize * 2];
+			for(size_t i{0}; i < MaxSize; i++){
+				NewData[i] = Data[i];
+			}
+			delete[] Data;
+			Data = NewData;
+			MaxSize *= 2;
+		}
+		
 	public:
 		explicit DynamicArray(){
 			Data = new Tipe[5];
@@ -20,16 +30,6 @@ class DynamicArray{
 			}
 			*(Data + Size) = Value;
 			Size++;
-		}
-		
-		void ResizeArray(){
-			Tipe* NewData = new Tipe[ MaxSize * 2];
-			for(size_t i{0}; i < MaxSize; i++){
-				NewData[i] = Data[i];
-			}
-			delete[] Data;
-			Data = NewData;
-			MaxSize *= 2;
 		}
 		
 		void DisplayArray(){

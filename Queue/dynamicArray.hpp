@@ -8,6 +8,16 @@ class DynamicArray{
 		size_t MaxSize{5};
 		size_t headPointer{0};
 		size_t tailPointer{0};
+		
+		void ResizeArray(){
+			Tipe* NewData = new Tipe[ MaxSize * 2];
+			for(size_t i{0}; i < MaxSize; i++){
+				NewData[i] = Data[i];
+			}
+			delete[] Data;
+			Data = NewData;
+			MaxSize *= 2;
+		}
 	
 	public:
 		explicit DynamicArray(){
@@ -22,15 +32,6 @@ class DynamicArray{
 			Size++;
 		}
 		
-		void ResizeArray(){
-			Tipe* NewData = new Tipe[ MaxSize * 2];
-			for(size_t i{0}; i < MaxSize; i++){
-				NewData[i] = Data[i];
-			}
-			delete[] Data;
-			Data = NewData;
-			MaxSize *= 2;
-		}
 		void DeleteFirst(){
 			Size++;
 			headPointer++;
