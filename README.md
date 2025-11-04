@@ -11,16 +11,16 @@ Current Progression:-
 
 Easy:
 
-- ✅Dynamic Array (Completed)
-- ✅Stack (Completed)
-- ✅Queue(Completed but needs a better algorythm)
-- ✅Circular Buffer (Completed)
+- ✅Dynamic Array (Completed) #1
+- ✅Stack (Completed) [I might have just build it over Dynamic Array!] #3 
+- ✅Queue(Completed but needs a better algorythm) [I might have just build it over Dynamic Array!] #5
+- ✅Circular Buffer (Completed) #4
 
 
 Intermediate:
 
 - Linked List[Half Done]
-  - ✅ Singly Linked List(Completed)
+  - ✅ Singly Linked List(Completed) #2
   - Doubly LinkedList[TBA]
 - Deque
 - Heap
@@ -32,8 +32,8 @@ Pain in the ass:
 
 - Hash Map 
 - Advanced Hash collision strategies 
-- Binary Tree
-- BST(Binary Search Tree)
+- ✅ Binary Tree(Competed)[This is a advanced complete binary tree which I accidentally made.] #6
+- BST(Binary Search Tree) # Nexy on the list!!
 - Graphs
 - Trie
 

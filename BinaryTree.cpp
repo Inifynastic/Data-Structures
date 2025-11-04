@@ -1,3 +1,7 @@
+//This is Recursive hell!!!!! Everything has recursion
+// Before writing this I thought recursions are useless and now I hate myself becuase of recursion and how useful it is
+// Also I regret doing this but I am way too far in to quit now!
+
 #include <iostream>
 
 template <typename T>
@@ -27,21 +31,19 @@ class BinaryTree{
 		}
 		return false;
 	}
-	/*void inOrderTraversal(Node<T>* tempPointer){ //This works but too leanthy
-		std::cout<< tempPointer->data <<std::endl;
-		if((tempPointer->rightPointer == nullptr) && (tempPointer->leftPointer == nullptr)){
-			return;
-		}if(tempPointer->rightPointer == nullptr){
-			inOrderTraversal(tempPointer->leftPointer);
-			return;
+	bool DeleteLeafNode(Node<T>* tempPointer, Node<T>* swapPointer){ // tempPointer = the pointer we wanna delete(or root) and swampPointer = the pointer we wanna delete
+		if((tempPointer->leftPointer == nullptr) && (tempPointer-> rightPointer == nullptr)){
+			swapPointer->data = tempPointer->data;
+			delete tempPointer;
+			return true;
 		}
-		if(tempPointer->leftPointer == nullptr){
-			inOrderTraversal(tempPointer->rightPointer);
-			return;
+		if(DeleteLeafNode(tempPointer->leftPointer)){
+			return true;
+		}if(DeleteLeafNode(tempPointer->rightPointer)){
+			return true;
 		}
-		inOrderTraversal(tempPointer->rightPointer);
-		inOrderTraversal(tempPointer->leftPointer);
-	}*/
+		return false;
+	}
 	
 	void inOrderTraversal(Node<T>* tempPointer){
 		if(tempPointer == nullptr) return;
@@ -51,30 +53,87 @@ class BinaryTree{
 		inOrderTraversal(tempPointer->rightPointer);
 	}
 	
-	bool reattach(Node<T>* leftNode, Node<T>* rightNode){ // This is gonna be next level pain in the ass <3
+	void reattach(Node<T>* tempPointer, Node<T>* parentNode){ // This is gonna be next level pain in the ass <3
+		if(!parentNode){ //Root pointer case
+			DeleteLeafNode(tempPointer, tempPointer);
+			return;
+		}if((!tempPointer->leftPointer) && (!tempPointer->rightPointer)){
+			DeleteLeafNode(tempPointer, tempPointer);
+			return;
+		}if(!tempPointer->leftPointer){
+			if(!parentNode->leftPointer){
+				parentNode->leftPointer = tempPointer->leftPointer;
+			}else{
+				parentNode->rightPointer = tempPointer->leftPointer;
+			}
+			delete tempPointer;
+			return;
+		}if(!tempPointer->rightPointer){
+			if(!parentNode->leftPointer){
+				parentNode->leftPointer = tempPointer->rightPointer;
+			}else{
+				parentNode->rightPointer = tempPointer->rightPointer;
+			}
+			delete tempPointer;
+			return;
+			}
 	}
 	
 	bool inOrderDelete(const T& value, Node<T>* tempPointer){
+		Node<T>* parentPointer{nullptr};
 		if(tempPointer->leftPointer != nullptr){
 			if(tempPointer->leftPointer->data == value){
-				reattach(tempPointer->leftPointer, tempPointer->rightPointer);
+				reattach(tempPointer, parentPointer);
 				delete tempPointer->leftPointer;
 				return true;
 			}
 		}if(tempPointer->rightPointer != nullptr){
 			if(tempPointer->leftPointer->data == value){
-				reattach(tempPointer->leftPointer, tempPointer->rightPointer);
+				reattach(tempPointer, parentPointer);
 				delete tempPointer->rightPointer;
 				return true;
 			}
 		}
-		if(inOrderDelete(value, tempPointer->leftPointer) return true;
-		if(inOrderDelete(value, tempPointer->rightPointer) return true;
+		if(inOrderDelete(value, tempPointer->leftPointer)){
+			parentPointer = tempPointer;
+			return true;
+		}
+		if(inOrderDelete(value, tempPointer->rightPointer)){
+			parentPointer = tempPointer;
+			return true;
+		}
 		return false;
 	}
 	
+	void destroy(Node<T>* current){
+		if(current){
+			if(current->leftPointer) destroy(current->leftPointer);
+			if(current->rightPointer) destroy(current->rightPointer);
+			delete current;
+		}	
+	}
+	
+	void deepCopy(Node<T>* current, Node<T>* otherRoot){//current = root
+		if(otherRoot){
+			if(otherRoot->leftPointer){
+				current->leftPointer = new Node<T>;
+				current->leftPointer->data = otherRoot->leftPointer->data;
+			 }
+			if(otherRoot->rightPointer){
+				current->rightPointer = new Node<T>;
+				current->rightPointer->data = otherRoot->rightPointer->data;
+			 }
+			
+			deepCopy(current->leftPointer, otherRoot->leftPointer);
+			deepCopy(current->rightPointer, otherRoot->rightPointer);
+		}
+		return;
+	}
+	
 	public:
-		//BinaryTree : root(nullptr) {} //This is a constructor!
+		BinaryTree(){
+			root = nullptr;
+		}
 		
 		void insertNode(T value){
 			Node<T>* tempPointer;
@@ -98,6 +157,32 @@ class BinaryTree{
 			inOrderDelete(value, root);
 			
 		}
+		
+		~BinaryTree(){ //Destructor
+			destroy(root);
+		}
+		
+		BinaryTree(const BinaryTree& other){ //Copy Constructor
+			if(!other.root) throw std::runtime_error("The Tree is Empty!");
+			root = new Node<T>;
+			root->data = other.root->data;
+			deepCopy(root, other.root);
+		}
+		BinaryTree& operator =(const BinaryTree& other){ //Copy Assignment Operator
+			if(!other.root) return* this;
+			destroy(root);
+			root = new Node<T>;
+			root->data = other.root->data;
+		}
+		BinaryTree(BinaryTree&& other) noexcept{ //Move Constructor
+			root = other.root;
+			other.root = nullptr;
+		}
+		BinaryTree& operator =(BinaryTree&& other) noexcept{ //Move Assignemnt Operator
+			delete root;
+			root = other.root;
+			other.root = nullptr;
+		}
 };
 
 int main(){
@@ -108,7 +193,9 @@ int main(){
 	c1.insertNode(4);
 	c1.insertNode(5);
 	c1.insertNode(6);
-	c1.insertNode(7);
+	c1.insertNode(7);	
+	c1.display();
 	
+	c1.removeValue(5);
 	c1.display();
 }
