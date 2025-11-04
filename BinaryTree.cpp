@@ -51,8 +51,26 @@ class BinaryTree{
 		inOrderTraversal(tempPointer->rightPointer);
 	}
 	
-	bool inOrderDelete(){
-		
+	bool reattach(Node<T>* leftNode, Node<T>* rightNode){ // This is gonna be next level pain in the ass <3
+	}
+	
+	bool inOrderDelete(const T& value, Node<T>* tempPointer){
+		if(tempPointer->leftPointer != nullptr){
+			if(tempPointer->leftPointer->data == value){
+				reattach(tempPointer->leftPointer, tempPointer->rightPointer);
+				delete tempPointer->leftPointer;
+				return true;
+			}
+		}if(tempPointer->rightPointer != nullptr){
+			if(tempPointer->leftPointer->data == value){
+				reattach(tempPointer->leftPointer, tempPointer->rightPointer);
+				delete tempPointer->rightPointer;
+				return true;
+			}
+		}
+		if(inOrderDelete(value, tempPointer->leftPointer) return true;
+		if(inOrderDelete(value, tempPointer->rightPointer) return true;
+		return false;
 	}
 	
 	public:
@@ -74,6 +92,10 @@ class BinaryTree{
 			inOrderTraversal(root);
 		}
 		void removeValue(T value){
+			if(root == nullptr){
+				throw std::runtime_error("The Tree is empty!");
+			}
+			inOrderDelete(value, root);
 			
 		}
 };
