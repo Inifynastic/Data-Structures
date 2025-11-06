@@ -31,21 +31,7 @@ class BinaryTree{
 		}
 		return false;
 	}
-	bool DeleteLeafNode(Node<T>* tempPointer, Node<T>* swapPointer){ // tempPointer = the pointer we wanna delete(or root) and swampPointer = the pointer we wanna delete
-		if((tempPointer->leftPointer == nullptr) && (tempPointer-> rightPointer == nullptr)){
-			swapPointer->data = tempPointer->data;
-			delete tempPointer;
-			return true;
-		}
-		if(DeleteLeafNode(tempPointer->leftPointer)){
-			return true;
-		}if(DeleteLeafNode(tempPointer->rightPointer)){
-			return true;
-		}
-		return false;
-	}
-	
-	void inOrderTraversal(Node<T>* tempPointer){
+	void inOrderTraversal(Node<T>*& tempPointer){
 		if(tempPointer == nullptr) return;
 		
 		inOrderTraversal(tempPointer->leftPointer);
@@ -53,59 +39,47 @@ class BinaryTree{
 		inOrderTraversal(tempPointer->rightPointer);
 	}
 	
-	void reattach(Node<T>* tempPointer, Node<T>* parentNode){ // This is gonna be next level pain in the ass <3
-		if(!parentNode){ //Root pointer case
-			DeleteLeafNode(tempPointer, tempPointer);
-			return;
-		}if((!tempPointer->leftPointer) && (!tempPointer->rightPointer)){
-			DeleteLeafNode(tempPointer, tempPointer);
-			return;
-		}if(!tempPointer->leftPointer){
-			if(!parentNode->leftPointer){
-				parentNode->leftPointer = tempPointer->leftPointer;
-			}else{
-				parentNode->rightPointer = tempPointer->leftPointer;
+	void inOrderDelete(const T& value, Node<T>*& tempPointer){ // 3 FUCKING DAYS OF PAIN LATER I DID IT!!!!
+		if(!tempPointer) return;
+		if(tempPointer->data == value){
+			if(!tempPointer->leftPointer && !tempPointer->rightPointer){
+				delete tempPointer;
+				tempPointer = nullptr;
+				return;
 			}
+			if(!tempPointer->leftPointer && tempPointer->rightPointer){
+				Node<T>* temp{tempPointer->rightPointer};
+				delete tempPointer;
+				tempPointer = temp;
+				return;
+			}
+			if(tempPointer->leftPointer && !tempPointer->rightPointer){
+				Node<T>* temp{tempPointer->leftPointer};
+				delete tempPointer;
+				tempPointer = temp;
+				return;
+			}
+			if(tempPointer->leftPointer && tempPointer->rightPointer){
+				tempPointer->data = deleteLeafNode(tempPointer);
+				return;
+			}
+				
+		}
+		inOrderDelete(value, tempPointer->leftPointer);
+		inOrderDelete(value, tempPointer->rightPointer);
+		return;
+	}
+	T deleteLeafNode(Node<T>*& tempPointer){
+		if(!tempPointer->leftPointer && !tempPointer->rightPointer){
+			T DataStore = tempPointer->data;
 			delete tempPointer;
-			return;
-		}if(!tempPointer->rightPointer){
-			if(!parentNode->leftPointer){
-				parentNode->leftPointer = tempPointer->rightPointer;
-			}else{
-				parentNode->rightPointer = tempPointer->rightPointer;
-			}
-			delete tempPointer;
-			return;
-			}
+			tempPointer = nullptr;
+			return DataStore;
+		}
+		return deleteLeafNode(tempPointer->leftPointer);
 	}
 	
-	bool inOrderDelete(const T& value, Node<T>* tempPointer){
-		Node<T>* parentPointer{nullptr};
-		if(tempPointer->leftPointer != nullptr){
-			if(tempPointer->leftPointer->data == value){
-				reattach(tempPointer, parentPointer);
-				delete tempPointer->leftPointer;
-				return true;
-			}
-		}if(tempPointer->rightPointer != nullptr){
-			if(tempPointer->leftPointer->data == value){
-				reattach(tempPointer, parentPointer);
-				delete tempPointer->rightPointer;
-				return true;
-			}
-		}
-		if(inOrderDelete(value, tempPointer->leftPointer)){
-			parentPointer = tempPointer;
-			return true;
-		}
-		if(inOrderDelete(value, tempPointer->rightPointer)){
-			parentPointer = tempPointer;
-			return true;
-		}
-		return false;
-	}
-	
-	void destroy(Node<T>* current){
+	void destroy(Node<T>*& current){
 		if(current){
 			if(current->leftPointer) destroy(current->leftPointer);
 			if(current->rightPointer) destroy(current->rightPointer);
@@ -113,7 +87,7 @@ class BinaryTree{
 		}	
 	}
 	
-	void deepCopy(Node<T>* current, Node<T>* otherRoot){//current = root
+	void deepCopy(Node<T>*& current, Node<T>*& otherRoot){//current = root
 		if(otherRoot){
 			if(otherRoot->leftPointer){
 				current->leftPointer = new Node<T>;
@@ -151,9 +125,7 @@ class BinaryTree{
 			inOrderTraversal(root);
 		}
 		void removeValue(T value){
-			if(root == nullptr){
-				throw std::runtime_error("The Tree is empty!");
-			}
+			if(root == nullptr) throw std::runtime_error("The Tree is empty!");
 			inOrderDelete(value, root);
 			
 		}
@@ -163,25 +135,28 @@ class BinaryTree{
 		}
 		
 		BinaryTree(const BinaryTree& other){ //Copy Constructor
-			if(!other.root) throw std::runtime_error("The Tree is Empty!");
 			root = new Node<T>;
 			root->data = other.root->data;
 			deepCopy(root, other.root);
 		}
 		BinaryTree& operator =(const BinaryTree& other){ //Copy Assignment Operator
-			if(!other.root) return* this;
-			destroy(root);
-			root = new Node<T>;
-			root->data = other.root->data;
+			if(!(other.root == root)){
+				destroy(root);
+				root = new Node<T>;
+				root->data = other.root->data;
+			}
+			return* this;
 		}
 		BinaryTree(BinaryTree&& other) noexcept{ //Move Constructor
 			root = other.root;
 			other.root = nullptr;
 		}
 		BinaryTree& operator =(BinaryTree&& other) noexcept{ //Move Assignemnt Operator
-			delete root;
+			if(other.root == root) return* this;
+			destroy(root);
 			root = other.root;
 			other.root = nullptr;
+			return* this;
 		}
 };
 
@@ -193,9 +168,20 @@ int main(){
 	c1.insertNode(4);
 	c1.insertNode(5);
 	c1.insertNode(6);
-	c1.insertNode(7);	
+	c1.insertNode(7);
 	c1.display();
 	
+	std::cout<<std::endl;
+	
 	c1.removeValue(5);
+	c1.removeValue(3);
+	c1.removeValue(1);
+	c1.removeValue(4);
 	c1.display();
+	
+	
+	BinaryTree<int> c3;
+	BinaryTree<int> c2;
+	c2 = c1;
+	c2.display();
 }
