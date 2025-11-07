@@ -11,10 +11,10 @@ Current Progression:-
 
 Easy:
 
-- ✅Dynamic Array (Completed) #1
-- ✅Stack (Completed) [I might have just build it over Dynamic Array!] #3 
-- ✅Queue(Completed but needs a better algorythm) [I might have just build it over Dynamic Array!] #5
-- ✅Circular Buffer (Completed) #4
+- ✅ Dynamic Array (Completed) #1
+- ✅ Stack (Completed) [I might have just build it over Dynamic Array!] #3 
+- ✅ Queue(Completed but needs a better algorythm) [I might have just build it over Dynamic Array!] #5
+- ✅ Circular Buffer (Completed) #4
 
 
 Intermediate:
@@ -33,7 +33,7 @@ Pain in the ass:
 - Hash Map 
 - Advanced Hash collision strategies 
 - ✅ Binary Tree(Competed)[This is a advanced complete binary tree which I accidentally made.] #6
-- BST(Binary Search Tree) [This was easy because of old BT] #7
+- ✅ BST(Binary Search Tree)(Completed) [This was easy because of old BT] #7
 - Graphs
 - Trie
 
