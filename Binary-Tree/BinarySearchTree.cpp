@@ -42,6 +42,22 @@ class BinaryTree{
 		inOrderTraversal(tempPointer->rightPointer);
 	}
 	
+	bool inOrderTraversal(Node<T>*& tempPointer,const T& value){
+		if(tempPointer == nullptr) return false;
+		
+		if(value == tempPointer->data){
+			std::cout<<"Found! " << tempPointer->data << std::endl;
+			return true;
+		}
+		
+		if(value < tempPointer->data){
+			return inOrderTraversal(tempPointer->leftPointer, value);
+		}else{
+			return inOrderTraversal(tempPointer->rightPointer, value);
+		}
+		return false;
+	}
+	
 	void inOrderDelete(const T& value, Node<T>*& tempPointer){ 
 		if(!tempPointer) return;
 		if(tempPointer->data == value){
@@ -68,7 +84,7 @@ class BinaryTree{
 			}
 				
 		}
-		if(value < tempPointer->value){
+		if(value < tempPointer->data){
 			inOrderDelete(value, tempPointer->leftPointer);
 		}else{
 			inOrderDelete(value, tempPointer->rightPointer);
@@ -130,6 +146,14 @@ class BinaryTree{
 		void display(){
 			inOrderTraversal(root);
 		}
+		
+		void searchTree(const T& value){
+			bool flag = inOrderTraversal(root, value);
+			if(!flag){
+				std::cout<<"Value not found!"<<std::endl;
+			}
+		}
+		
 		void removeValue(T value){
 			if(root == nullptr) throw std::runtime_error("The Tree is empty!");
 			inOrderDelete(value, root);
@@ -176,6 +200,8 @@ int main(){
 	c1.insertNode(6);
 	c1.insertNode(7);
 	c1.display();
+	
+	c1.searchTree(7);
 	
 	std::cout<<std::endl;
 	
