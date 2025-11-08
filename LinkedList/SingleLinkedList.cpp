@@ -11,7 +11,6 @@ struct Node{
 template <typename T>
 class LinkedList{
 	Node<T>* HeadPointer{nullptr};
-	size_t Size{0};
 	
 	public:
 		void InsertAtTheHead(const T& Dat){
