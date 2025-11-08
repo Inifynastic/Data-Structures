@@ -90,7 +90,6 @@ class LinkedList{
 			}
 			PrevPointer->NextNode = TempPointer->NextNode;
 			delete TempPointer;
-			
 		}
 		
 		void DisplatList(){
