@@ -2,8 +2,8 @@ This is my custom Data Structures.
 
 My Rules for working on this project:-
 - STL Data Structures are not allowed.(Excluding streams and exceptions)
-- I am building them without looking at the standard methods.(SO ITS GONNA BE A MASSIVE CHAOS!)
-- I am now allowed to use Smart Pointers. Everything must be done manually.
+- I am building them without looking at the standard methods.(ITS GONNA BE CHAOTIC!!!!)
+- I am not allowed to use Smart Pointers. Everything must be done manually.
 - Abstraction = Bad(Unless I made it myself)
 - I must always implement the Rule of 5 as long as it is possible.
 
