@@ -19,9 +19,9 @@ Easy:
 
 Intermediate:
 
-- Linked List[Half Done]
+- ✅ Linked List(Completed) #2/8
   - ✅ Singly Linked List(Completed) #2
-  - Doubly LinkedList [Next on the list!!]
+  - ✅ Doubly LinkedList (Completed) #8
 - Deque
 - Heap
 - Priority Queue
@@ -30,7 +30,7 @@ Intermediate:
 
 Pain in the ass:
 
-- Hash Map 
+- Hash Map [In Progress!]
 - Advanced Hash collision strategies 
 - ✅ Binary Tree(Competed)[This is a advanced complete binary tree which I accidentally made.] #6
 - ✅ BST(Binary Search Tree)(Completed) [This was easy because of old BT] #7
