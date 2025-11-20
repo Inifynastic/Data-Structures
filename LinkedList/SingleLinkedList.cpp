@@ -13,6 +13,10 @@ class LinkedList{
 	Node<T>* HeadPointer{nullptr};
 	
 	public:
+		LinkedList(){
+			headPointer = nullptr;
+		}
+		
 		void InsertAtTheHead(const T& Dat){
 			Node<T>* TempPointer = HeadPointer;
 			HeadPointer = new Node<T>;

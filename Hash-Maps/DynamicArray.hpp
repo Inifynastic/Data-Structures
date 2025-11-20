@@ -5,11 +5,11 @@ class DynamicArray{
 	private:
 		T* data{nullptr};
 		size_t size{0};
-		size_t maxSize{5};
+		size_t maxSize{8};
 		
 		void ResizeArray(){
 			T* newData = new T[ maxSize * 2];
-			for(size_t i{0}; i < maxSize; i++){
+			for(size_t i{0}; i < size; i++){
 				newData[i] = data[i];
 			}
 			delete[] data;
@@ -19,10 +19,10 @@ class DynamicArray{
 		
 	public:
 		explicit DynamicArray(){
-			data = new T[5];
+			data = new T[8];
 		}
 		
-		void AddData(const T& value){
+		void addAtBack(const T& value){
 			if(!(size < maxSize)){
 				ResizeArray();
 			}
@@ -44,6 +44,20 @@ class DynamicArray{
 		}
 		void DispalyTop(){
 			std::cout<<data[size];
+		}
+		
+		size_t length(){
+			return size;
+		}
+		size_t capacity(){
+			return maxSize;
+		}
+		
+		T getIndex(size_t index){
+			if(index >= maxSize){
+				throw std::runtime_error("Invalid Arguement");
+			}
+			return data[index];
 		}
 		
 		  ~DynamicArray() { //Custom Destructor [Rule of 3 Part One]
