@@ -114,9 +114,13 @@ class DLinkedList{
 		}
 		
 		V getIndex(const K& ke){
+			if(headPointer->key == ke){
+				return headPointer->data;
+			}
+			
 			size_t i{0};
 			DNode<K, V>* tempPointer{headPointer};
-			while(tempPointer->nextNode){
+			while(tempPointer){
 				if(ke == tempPointer->key){
 					return tempPointer->data;
 				}
