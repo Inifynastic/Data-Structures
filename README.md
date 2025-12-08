@@ -22,7 +22,7 @@ Intermediate:
 - ✅ Linked List(Completed) #2/8
   - ✅ Singly Linked List(Completed) #2
   - ✅ Doubly LinkedList (Completed) #8
-- Deque
+- Dynamic Circular Buffer (Completed) #9 [Switched to this instead of dequeue]
 - Heap
 - Priority Queue
 - Union-Find
@@ -30,8 +30,8 @@ Intermediate:
 
 Pain in the ass:
 
-- Hash Map [In Progress!]
-- Advanced Hash collision strategies 
+- ✅ Hash Map (Completed )[But I need to get a better HashFunction]
+- Advanced Hash collision strategies
 - ✅ Binary Tree(Competed)[This is a advanced complete binary tree which I accidentally made.] #6
 - ✅ BST(Binary Search Tree)(Completed) [This was easy because of old BT] #7
 - Graphs

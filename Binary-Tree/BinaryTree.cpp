@@ -69,6 +69,7 @@ class BinaryTree{
 		inOrderDelete(value, tempPointer->rightPointer);
 		return;
 	}
+	
 	T deleteLeafNode(Node<T>*& tempPointer){
 		if(!tempPointer->leftPointer && !tempPointer->rightPointer){
 			T DataStore = tempPointer->data;
